@@ -8,6 +8,8 @@ import lombok.Getter;
 @Getter
 @EqualsAndHashCode
 public class SignUpForm {
+    private String name;
+    private String surname;
     private String email;
     private String password;
 }
