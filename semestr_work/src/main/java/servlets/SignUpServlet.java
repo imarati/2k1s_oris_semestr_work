@@ -1,9 +1,11 @@
 package servlets;
 
 import dto.SignUpForm;
-import services.SignUpService;
+import interfaces.SignUpService;
 import services.SignUpServiceImpl;
 
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,14 +18,9 @@ public class SignUpServlet extends HttpServlet {
     private SignUpService signUpService;
 
     @Override
-    public void init() throws ServletException {
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        signUpService = new SignUpServiceImpl();
+    public void init(ServletConfig config) throws ServletException {
+        ServletContext servletContext = config.getServletContext();
+        signUpService = (SignUpService) servletContext.getAttribute("signUpService");
     }
 
     @Override

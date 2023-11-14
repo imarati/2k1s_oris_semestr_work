@@ -1,10 +1,12 @@
 package servlets;
 
 import dto.SignInForm;
-import exceptions.InvalidEmailOrPasswordException;
-import services.SignInService;
+import exceptions.InvalidEmailException;
+import interfaces.SignInService;
 import services.SignInServiceImpl;
 
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,14 +19,9 @@ public class SignInServlet extends HttpServlet {
     private SignInService signInService;
 
     @Override
-    public void init() throws ServletException {
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        signInService = new SignInServiceImpl();
+    public void init(ServletConfig config) throws ServletException {
+        ServletContext servletContext = config.getServletContext();
+        signInService = (SignInService) servletContext.getAttribute("signINService");
     }
 
     @Override
@@ -47,8 +44,8 @@ public class SignInServlet extends HttpServlet {
 
             resp.sendRedirect("/");
         }
-        catch (InvalidEmailOrPasswordException ignored) {
-
+        catch (Exception e) {
+            req.getRequestDispatcher("/html/signIn.html").forward(req, resp);
         }
     }
 }

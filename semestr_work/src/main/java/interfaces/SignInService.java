@@ -1,4 +1,4 @@
-package services;
+package interfaces;
 
 import dto.SignInForm;
 import models.User;

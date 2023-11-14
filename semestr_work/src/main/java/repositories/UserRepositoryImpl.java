@@ -1,26 +1,31 @@
 package repositories;
 
+import interfaces.UserRepository;
 import models.User;
-import org.springframework.security.access.method.P;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserRepositoryImpl implements UserRepository{
-    Connection connection;
+public class UserRepositoryImpl implements UserRepository {
+    private DataSource dataSource;
 
     String INSERT_INTO_USERS = "INSERT INTO users (name, surname, email, password) VALUES (?,?,?,?)";
-    String SELECT_FROM_USERS_WHERE_EMAIL_AND_PASSWORD = "SELECT * FROM users WHERE email=? AND password=?";
+    String SELECT_FROM_USERS_WHERE_EMAIL = "SELECT * FROM users WHERE email=?";
 
-    public UserRepositoryImpl (Connection connection) {
-        this.connection = connection;
+    public UserRepositoryImpl (DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     @Override
     public void save(User entity) {
         try {
+            Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_INTO_USERS);
             preparedStatement.setString(1, entity.getName());
             preparedStatement.setString(2, entity.getSurname());
@@ -35,11 +40,11 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
-    public User findByEmailAndPassword(String email, String password) {
+    public User findByEmail(String email) {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_USERS_WHERE_EMAIL_AND_PASSWORD);
+            Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_USERS_WHERE_EMAIL);
             preparedStatement.setString(1, email);
-            preparedStatement.setString(2, password);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
