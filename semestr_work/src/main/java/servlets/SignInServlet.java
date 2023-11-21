@@ -2,7 +2,9 @@ package servlets;
 
 import dto.SignInForm;
 import exceptions.InvalidEmailException;
+import interfaces.RoleService;
 import interfaces.SignInService;
+import models.User;
 import services.SignInServiceImpl;
 
 import javax.servlet.ServletConfig;
@@ -12,16 +14,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/signIn")
 public class SignInServlet extends HttpServlet {
     private SignInService signInService;
+    private RoleService roleService;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         ServletContext servletContext = config.getServletContext();
-        signInService = (SignInService) servletContext.getAttribute("signINService");
+        signInService = (SignInService) servletContext.getAttribute("signInService");
+        roleService = (RoleService) servletContext.getAttribute("roleService");
     }
 
     @Override
@@ -40,7 +45,13 @@ public class SignInServlet extends HttpServlet {
                 .build();
 
         try {
-            signInService.signIn(signInForm);
+            User user = signInService.signIn(signInForm);
+            HttpSession httpSession = req.getSession(true);
+            httpSession.setAttribute("authenticated", true);
+
+            String role = roleService.getRole(user.getId());
+
+            httpSession.setAttribute("role", role);
 
             resp.sendRedirect("/");
         }

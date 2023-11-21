@@ -1,10 +1,11 @@
 package listener;
 
-import interfaces.SignInService;
-import interfaces.SignUpService;
-import interfaces.UserRepository;
+import interfaces.*;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import repositories.RoleRepositoryImpl;
 import repositories.UserRepositoryImpl;
+import services.AddAdminServiceImpl;
+import services.RoleServiceImpl;
 import services.SignInServiceImpl;
 import services.SignUpServiceImpl;
 
@@ -32,10 +33,15 @@ public class DataBaseServletContextListener implements ServletContextListener {
 
         UserRepository userRepository = new UserRepositoryImpl(dataSource);
         servletContext.setAttribute("userRep", userRepository);
+        RoleRepository roleRepository = new RoleRepositoryImpl(dataSource);
         SignUpService signUpService = new SignUpServiceImpl(userRepository);
         servletContext.setAttribute("signUpService", signUpService);
-        SignInService signInService = new SignInServiceImpl(userRepository);
-        servletContext.setAttribute("signINService", signInService);
+        SignInService signInService = new SignInServiceImpl(userRepository, roleRepository);
+        servletContext.setAttribute("signInService", signInService);
+        AddAdminService addAdminService = new AddAdminServiceImpl(userRepository);
+        servletContext.setAttribute("addAdminService", addAdminService);
+        RoleService roleService = new RoleServiceImpl(roleRepository);
+        servletContext.setAttribute("roleService", roleService);
     }
 
     @Override

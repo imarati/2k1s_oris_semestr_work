@@ -1,8 +1,8 @@
 package servlets;
 
 import dto.SignUpForm;
-import interfaces.SignUpService;
-import services.SignUpServiceImpl;
+import interfaces.AddAdminService;
+import services.AddAdminServiceImpl;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -13,21 +13,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/signUp")
-public class SignUpServlet extends HttpServlet {
-    private SignUpService signUpService;
+@WebServlet("/addAdmin")
+public class AddAdminServlet extends HttpServlet {
+    private AddAdminService addAdminService;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         ServletContext servletContext = config.getServletContext();
-        signUpService = (SignUpService) servletContext.getAttribute("signUpService");
+        addAdminService = (AddAdminServiceImpl) servletContext.getAttribute("addAdminService");
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("signUp doget");
+        System.out.println("addAdmin doget");
 
-        req.getRequestDispatcher("/html/signUp.html").forward(req, resp);
+        req.getRequestDispatcher("/html/addAdmin.html").forward(req, resp);
     }
 
     @Override
@@ -44,8 +44,10 @@ public class SignUpServlet extends HttpServlet {
                 .password(password)
                 .build();
 
-        signUpService.signUp(signUpForm);
+        addAdminService.addAdmin(signUpForm);
 
-        resp.sendRedirect("/signIn");
+        System.out.println("addAdmin dopost");
+
+        resp.sendRedirect("/");
     }
 }
