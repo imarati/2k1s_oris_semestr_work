@@ -38,7 +38,7 @@ public class UserRepositoryImpl implements UserRepository {
             User user = findByEmail(entity.getEmail());
 
             preparedStatement = connection.prepareStatement(INSERT_INTO_USERS_ROLES);
-            preparedStatement.setInt(1, user.getId());
+            preparedStatement.setLong(1, user.getId());
             preparedStatement.setInt(2, 1);
 
             rows = preparedStatement.executeUpdate();
@@ -63,7 +63,7 @@ public class UserRepositoryImpl implements UserRepository {
             User user = findByEmail(entity.getEmail());
 
             preparedStatement = connection.prepareStatement(INSERT_INTO_USERS_ROLES);
-            preparedStatement.setInt(1, user.getId());
+            preparedStatement.setLong(1, user.getId());
             preparedStatement.setInt(2, 2);
 
             rows = preparedStatement.executeUpdate();

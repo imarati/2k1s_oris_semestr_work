@@ -2,6 +2,7 @@ package listener;
 
 import interfaces.*;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import repositories.FilesRepositoryImpl;
 import repositories.RoleRepositoryImpl;
 import repositories.UserRepositoryImpl;
 import services.AddAdminServiceImpl;
@@ -32,8 +33,11 @@ public class DataBaseServletContextListener implements ServletContextListener {
         ServletContext servletContext = sce.getServletContext();
 
         UserRepository userRepository = new UserRepositoryImpl(dataSource);
-        servletContext.setAttribute("userRep", userRepository);
+        servletContext.setAttribute("userRepository", userRepository);
         RoleRepository roleRepository = new RoleRepositoryImpl(dataSource);
+        servletContext.setAttribute("roleRepository", roleRepository);
+        FilesRepository filesRepository = new FilesRepositoryImpl(dataSource);
+        servletContext.setAttribute("filesRepository", filesRepository);
         SignUpService signUpService = new SignUpServiceImpl(userRepository);
         servletContext.setAttribute("signUpService", signUpService);
         SignInService signInService = new SignInServiceImpl(userRepository, roleRepository);
