@@ -9,6 +9,7 @@ import services.AddAdminServiceImpl;
 import services.RoleServiceImpl;
 import services.SignInServiceImpl;
 import services.SignUpServiceImpl;
+import servlets.FileServiceImpl;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -46,6 +47,8 @@ public class DataBaseServletContextListener implements ServletContextListener {
         servletContext.setAttribute("addAdminService", addAdminService);
         RoleService roleService = new RoleServiceImpl(roleRepository);
         servletContext.setAttribute("roleService", roleService);
+        FileService fileService = new FileServiceImpl(filesRepository);
+        servletContext.setAttribute("fileService", fileService);
     }
 
     @Override
