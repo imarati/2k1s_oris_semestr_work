@@ -83,15 +83,13 @@ public class UserRepositoryImpl implements UserRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
 
-            User user = User.builder()
+            return User.builder()
                     .id(resultSet.getInt("id"))
                     .name(resultSet.getString("name"))
                     .surname(resultSet.getString("surname"))
                     .email(resultSet.getString("email"))
                     .password(resultSet.getString("password"))
                     .build();
-
-            return user;
         }
         catch (SQLException e) {
             throw new RuntimeException(e);

@@ -2,7 +2,7 @@ package listener;
 
 import interfaces.*;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import repositories.FilesRepositoryImpl;
+import repositories.FileRepositoryImpl;
 import repositories.RoleRepositoryImpl;
 import repositories.UserRepositoryImpl;
 import services.AddAdminServiceImpl;
@@ -37,8 +37,8 @@ public class DataBaseServletContextListener implements ServletContextListener {
         servletContext.setAttribute("userRepository", userRepository);
         RoleRepository roleRepository = new RoleRepositoryImpl(dataSource);
         servletContext.setAttribute("roleRepository", roleRepository);
-        FilesRepository filesRepository = new FilesRepositoryImpl(dataSource);
-        servletContext.setAttribute("filesRepository", filesRepository);
+        FileRepository fileRepository = new FileRepositoryImpl(dataSource);
+        servletContext.setAttribute("fileRepository", fileRepository);
         SignUpService signUpService = new SignUpServiceImpl(userRepository);
         servletContext.setAttribute("signUpService", signUpService);
         SignInService signInService = new SignInServiceImpl(userRepository, roleRepository);
@@ -47,7 +47,7 @@ public class DataBaseServletContextListener implements ServletContextListener {
         servletContext.setAttribute("addAdminService", addAdminService);
         RoleService roleService = new RoleServiceImpl(roleRepository);
         servletContext.setAttribute("roleService", roleService);
-        FileService fileService = new FileServiceImpl(filesRepository);
+        FileService fileService = new FileServiceImpl(fileRepository);
         servletContext.setAttribute("fileService", fileService);
     }
 

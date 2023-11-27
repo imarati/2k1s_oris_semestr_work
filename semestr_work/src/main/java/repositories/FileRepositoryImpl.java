@@ -1,6 +1,6 @@
 package repositories;
 
-import interfaces.FilesRepository;
+import interfaces.FileRepository;
 import models.FileInfo;
 
 import javax.sql.DataSource;
@@ -9,14 +9,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class FilesRepositoryImpl implements FilesRepository {
+public class FileRepositoryImpl implements FileRepository {
     private DataSource dataSource;
 
     String INSERT_INTO_FILE = "INSERT INRO file ('storage_file_name', 'original_file_name', 'type', 'size') " +
             "VALUES(?,?,?,?)";
     String SELECT_FROM_FILE_WHERE_ID = "SELECT * FROM file WHERE id=?";
 
-    public FilesRepositoryImpl(DataSource dataSource) {
+    public FileRepositoryImpl(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -46,15 +46,13 @@ public class FilesRepositoryImpl implements FilesRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
 
-            FileInfo fileInfo = FileInfo.builder()
+            return FileInfo.builder()
                     .id(resultSet.getLong("id"))
                     .storageFileName(resultSet.getString("storage_file_name"))
                     .originalFileName(resultSet.getString("original_file_name"))
                     .type(resultSet.getString("type"))
                     .size(resultSet.getLong("size"))
                     .build();
-
-            return fileInfo;
         }
         catch (SQLException e) {
             throw new RuntimeException(e);

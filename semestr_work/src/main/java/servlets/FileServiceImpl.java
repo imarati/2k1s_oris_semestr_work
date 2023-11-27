@@ -1,9 +1,8 @@
 package servlets;
 
 import interfaces.FileService;
-import interfaces.FilesRepository;
+import interfaces.FileRepository;
 import models.FileInfo;
-import repositories.FilesRepositoryImpl;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,10 +13,10 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 public class FileServiceImpl implements FileService {
-    FilesRepository filesRepository;
+    FileRepository fileRepository;
 
-    public FileServiceImpl(FilesRepository filesRepository) {
-        this.filesRepository = filesRepository;
+    public FileServiceImpl(FileRepository fileRepository) {
+        this.fileRepository = fileRepository;
     }
 
     @Override
@@ -31,7 +30,7 @@ public class FileServiceImpl implements FileService {
 
         try {
             Files.copy(file, Paths.get("src/main/webapp/files" + fileInfo.getStorageFileName() + "." + fileInfo.getType().split("/")[1]));
-            filesRepository.save(fileInfo);
+            fileRepository.save(fileInfo);
         } catch (IOException e) {
             throw new IllegalArgumentException(e);
         }
@@ -39,7 +38,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void writeFileFromStorage(Long fileId, OutputStream outputStream) {
-        FileInfo fileInfo = filesRepository.findById(fileId);
+        FileInfo fileInfo = fileRepository.findById(fileId);
         File file = new File("src/main/webapp/files" + fileInfo.getStorageFileName() + "." + fileInfo.getType().split("/")[1]);
 
         try {
@@ -51,6 +50,6 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public FileInfo getFileInfo(Long fileId) {
-        return filesRepository.findById(fileId);
+        return fileRepository.findById(fileId);
     }
 }
