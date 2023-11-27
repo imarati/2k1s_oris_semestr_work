@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class GameRepositoryImpl implements GameRepository {
     DataSource dataSource;
 
-    private String INSERT_INTO_GAME = "INSERT INTO games ('name', 'review', 'file_id') VAlUES(?,?,?)";
+    private String INSERT_INTO_GAME = "INSERT INTO games (name, review, file_id) VAlUES(?,?,?)";
     private String SELECT_FROM_GAME_WHERE_ID = "SELECT * FROM games WHERE id=?";
 
     public GameRepositoryImpl(DataSource dataSource) {
@@ -27,7 +27,7 @@ public class GameRepositoryImpl implements GameRepository {
 
             preparedStatement.setString(1, entity.getName());
             preparedStatement.setString(2, entity.getReview());
-            preparedStatement.setLong(3, entity.getFile_id());
+            preparedStatement.setLong(3, entity.getFileId());
 
             int rows = preparedStatement.executeUpdate();
         } catch (SQLException e) {

@@ -1,5 +1,5 @@
 package interfaces;
 
 public interface RoleRepository {
-    String findByUserId(int userId);
+    String findByUserId(long userId);
 }

@@ -3,13 +3,10 @@ package listener;
 import interfaces.*;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import repositories.FileRepositoryImpl;
+import repositories.GameRepositoryImpl;
 import repositories.RoleRepositoryImpl;
 import repositories.UserRepositoryImpl;
-import services.AddAdminServiceImpl;
-import services.RoleServiceImpl;
-import services.SignInServiceImpl;
-import services.SignUpServiceImpl;
-import servlets.FileServiceImpl;
+import services.*;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -39,6 +36,8 @@ public class DataBaseServletContextListener implements ServletContextListener {
         servletContext.setAttribute("roleRepository", roleRepository);
         FileRepository fileRepository = new FileRepositoryImpl(dataSource);
         servletContext.setAttribute("fileRepository", fileRepository);
+        GameRepository gameRepository = new GameRepositoryImpl(dataSource);
+        servletContext.setAttribute("gameRepository", gameRepository);
         SignUpService signUpService = new SignUpServiceImpl(userRepository);
         servletContext.setAttribute("signUpService", signUpService);
         SignInService signInService = new SignInServiceImpl(userRepository, roleRepository);
@@ -49,6 +48,8 @@ public class DataBaseServletContextListener implements ServletContextListener {
         servletContext.setAttribute("roleService", roleService);
         FileService fileService = new FileServiceImpl(fileRepository);
         servletContext.setAttribute("fileService", fileService);
+        GameService gameService = new GameServiceImpl(gameRepository);
+        servletContext.setAttribute("gameService", gameService);
     }
 
     @Override

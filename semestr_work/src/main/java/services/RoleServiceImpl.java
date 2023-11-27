@@ -13,7 +13,7 @@ public class RoleServiceImpl implements interfaces.RoleService {
     }
 
     @Override
-    public String getRole(int userId) {
+    public String getRole(long userId) {
         return roleRepository.findByUserId(userId);
     }
 }

@@ -18,11 +18,11 @@ public class RoleRepositoryImpl implements RoleRepository {
         this.dataSource = dataSource;
     }
     @Override
-    public String findByUserId(int userId) {
+    public String findByUserId(long userId) {
         try {
             Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_USERS_ROLES_WHERE_USER_ID);
-            preparedStatement.setInt(1, userId);
+            preparedStatement.setLong(1, userId);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();

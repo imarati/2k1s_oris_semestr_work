@@ -25,8 +25,6 @@ public class AddAdminServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("addAdmin doget");
-
         req.getRequestDispatcher("/html/addAdmin.html").forward(req, resp);
     }
 
@@ -45,8 +43,6 @@ public class AddAdminServlet extends HttpServlet {
                 .build();
 
         addAdminService.addAdmin(signUpForm);
-
-        System.out.println("addAdmin dopost");
 
         resp.sendRedirect("/");
     }

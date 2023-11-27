@@ -1,5 +1,5 @@
 package interfaces;
 
 public interface RoleService {
-    String getRole(int userId);
+    String getRole(long userId);
 }
