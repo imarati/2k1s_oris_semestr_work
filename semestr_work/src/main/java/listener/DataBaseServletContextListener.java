@@ -1,17 +1,17 @@
 package listener;
 
 import interfaces.*;
+import models.Cart;
+import models.Game;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import repositories.FileRepositoryImpl;
-import repositories.GameRepositoryImpl;
-import repositories.RoleRepositoryImpl;
-import repositories.UserRepositoryImpl;
+import repositories.*;
 import services.*;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import java.util.ArrayList;
 
 @WebListener
 public class DataBaseServletContextListener implements ServletContextListener {
@@ -50,6 +50,11 @@ public class DataBaseServletContextListener implements ServletContextListener {
         servletContext.setAttribute("fileService", fileService);
         GameService gameService = new GameServiceImpl(gameRepository);
         servletContext.setAttribute("gameService", gameService);
+        Cart cart = Cart.builder().gamesList(new ArrayList<Game>()).build();
+        UsersGamesRepository usersGamesRepository = new UsersGamesRepositoryImpl(dataSource);
+        servletContext.setAttribute("usersGamesRepository", usersGamesRepository);
+        CartSevice cartSevice = new CartServiceImpl(cart, usersGamesRepository);
+        servletContext.setAttribute("cartSevice", cartSevice);
     }
 
     @Override

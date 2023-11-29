@@ -1,4 +1,5 @@
 <%@ page import="models.Game" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -7,23 +8,28 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <title>Game</title>
+    <title>Cart</title>
 </head>
 <body>
-<%Game game = (Game) request.getAttribute("game");%>
-<div class="container ">
+<div class="container">
     <div class="card mx-auto">
-        <img src="http://localhost:8080/uploaded/files?id=<%=game.getFileId()%>" class="card-img-top">
         <div class="card-body">
-            <h5 class="card-title"><%=game.getName()%></h5>
-            <p class="card-text"><%=game.getReview()%></p>
-            <form action="/game?id=<%=game.getId()%>" method="post">
-                <input class="btn btn-primary" type="submit" value="Add to cart">
+            <ul class="list-group">
+                <%
+                    List<Game> games = (List<Game>) request.getAttribute("games");
+                    for(int i = 0; i < games.size(); i++) {
+                %>
+
+                <li class="list-group-item"><%=games.get(i).getName()%></li>
+
+                <%}%>
+            </ul>
+            <form action="/cart" method="post">
+                <input class="btn btn-primary" type="submit" value="Bye">
             </form>
         </div>
     </div>
-</div>>
-
+</div>
 <script src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

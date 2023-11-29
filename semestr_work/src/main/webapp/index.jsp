@@ -33,14 +33,14 @@
 
 <div class="container">
     <%
-        List<Game> users = (List<Game>) request.getAttribute("games");
-        for(int i = 0; i < users.size(); i++) {
+        List<Game> games = (List<Game>) request.getAttribute("games");
+        for(int i = 0; i < games.size(); i++) {
     %>
 
     <div class="card mx-auto" style="width: 45rem;">
-        <img src="http://localhost:8080/uploaded/files?id=<%=users.get(i).getFileId()%>">
+        <img src="http://localhost:8080/uploaded/files?id=<%=games.get(i).getFileId()%>">
         <div class="card-body">
-            <h3 class="card-text text-center"><%=users.get(i).getName()%></h3>
+            <h3 class="card-text text-center"><a class="link-underline-light text-black" href="http://localhost:8080/game?id=<%=games.get(i).getId()%>"><%=games.get(i).getName()%></a></h3>
         </div>
     </div>
 
