@@ -4,6 +4,8 @@ import interfaces.GameRepository;
 import interfaces.GameService;
 import models.Game;
 
+import java.util.List;
+
 public class GameServiceImpl implements GameService {
     GameRepository gameRepository;
 
@@ -19,5 +21,10 @@ public class GameServiceImpl implements GameService {
     @Override
     public Game getGame(long gameId) {
         return gameRepository.findById(gameId);
+    }
+
+    @Override
+    public List<Game> getAll() {
+        return gameRepository.findAll();
     }
 }

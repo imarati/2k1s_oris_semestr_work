@@ -29,7 +29,7 @@ public class FileServiceImpl implements FileService {
                 .build();
 
         try {
-            Files.copy(file, Paths.get("F:\\dev\\projects\\java\\2k1s_oris_semestr_work\\semestr_work\\src\\main\\webapp\\files" + fileInfo.getStorageFileName() + "." + fileInfo.getType().split("/")[1]));
+            Files.copy(file, Paths.get("F:\\dev\\projects\\java\\2k1s_oris_semestr_work\\semestr_work\\src\\main\\webapp\\files\\" + fileInfo.getStorageFileName() + "." + fileInfo.getType().split("/")[1]));
             fileRepository.save(fileInfo);
 
             return fileRepository.findByStorageFileName(fileInfo.getStorageFileName()).getId();
@@ -41,7 +41,7 @@ public class FileServiceImpl implements FileService {
     @Override
     public void writeFileFromStorage(Long fileId, OutputStream outputStream) {
         FileInfo fileInfo = fileRepository.findById(fileId);
-        File file = new File("F:\\dev\\projects\\java\\2k1s_oris_semestr_work\\semestr_work\\src\\main\\webapp\\files" + fileInfo.getStorageFileName() + "." + fileInfo.getType().split("/")[1]);
+        File file = new File("F:\\dev\\projects\\java\\2k1s_oris_semestr_work\\semestr_work\\src\\main\\webapp\\files\\" + fileInfo.getStorageFileName() + "." + fileInfo.getType().split("/")[1]);
 
         try {
             Files.copy(file.toPath(), outputStream);

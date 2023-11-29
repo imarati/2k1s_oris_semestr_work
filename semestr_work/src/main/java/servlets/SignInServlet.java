@@ -48,6 +48,7 @@ public class SignInServlet extends HttpServlet {
             User user = signInService.signIn(signInForm);
             HttpSession httpSession = req.getSession(true);
             httpSession.setAttribute("authenticated", true);
+            httpSession.setAttribute("user", user);
 
             String role = roleService.getRole(user.getId());
 

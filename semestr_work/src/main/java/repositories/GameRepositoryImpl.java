@@ -2,18 +2,19 @@ package repositories;
 
 import interfaces.GameRepository;
 import models.Game;
+import models.User;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameRepositoryImpl implements GameRepository {
     DataSource dataSource;
 
     private String INSERT_INTO_GAME = "INSERT INTO games (name, review, file_id) VAlUES(?,?,?)";
     private String SELECT_FROM_GAME_WHERE_ID = "SELECT * FROM games WHERE id=?";
+    private String SELECT_FROM_GAME = "SELECT * FROM games";
 
     public GameRepositoryImpl(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -56,5 +57,32 @@ public class GameRepositoryImpl implements GameRepository {
             throw new RuntimeException(e);
         }
 
+    }
+
+    @Override
+    public List<Game> findAll() {
+        List<Game> gameList = new ArrayList<>();
+
+        try {
+            Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_GAME);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Game game = Game.builder()
+                        .id(resultSet.getLong("id"))
+                        .name(resultSet.getString("name"))
+                        .review(resultSet.getString("review"))
+                        .fileId(resultSet.getLong("file_id"))
+                        .build();
+
+                gameList.add(game);
+            }
+
+            return gameList;
+        }
+        catch (SQLException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 }
