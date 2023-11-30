@@ -16,8 +16,8 @@ public class UsersGamesRepositoryImpl implements UsersGamesRepository {
     private DataSource dataSource;
 
     private String INSERT_INTO_USERS_GAMES = "INSERT INTO users_games (user_id, game_id) VAlUES(?,?)";
-    private String SELECT_FROM_USERS_GAMES_WHERE_USER_ID = "SELECT * WHERE user_id=?";
-    private String SELECT_FROM_USERS_GAMES_WHERE_GAME_ID = "SELECT * WHERE game_id=?";
+    private String SELECT_FROM_USERS_GAMES_WHERE_USER_ID = "SELECT * FROM users_games WHERE user_id=?";
+    private String SELECT_FROM_USERS_GAMES_WHERE_GAME_ID = "SELECT * FROM users_games WHERE game_id=?";
 
     public UsersGamesRepositoryImpl(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -39,8 +39,8 @@ public class UsersGamesRepositoryImpl implements UsersGamesRepository {
     }
 
     @Override
-    public List<Game> findByUserId(long userId) {
-        List<Game> result = new ArrayList<>();
+    public List<Integer> findByUserId(long userId) {
+        List<Integer> result = new ArrayList<>();
 
         try {
             Connection connection = dataSource.getConnection();
@@ -50,14 +50,9 @@ public class UsersGamesRepositoryImpl implements UsersGamesRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                Game game = Game.builder()
-                        .id(resultSet.getLong("id"))
-                        .name(resultSet.getString("name"))
-                        .review(resultSet.getString("review"))
-                        .fileId(resultSet.getLong("file_id"))
-                        .build();
+                int gameId = resultSet.getInt("game_id");
 
-                result.add(game);
+                result.add(gameId);
             }
 
             return result;

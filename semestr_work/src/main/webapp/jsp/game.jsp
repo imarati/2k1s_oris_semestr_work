@@ -12,7 +12,7 @@
 <body>
 <%Game game = (Game) request.getAttribute("game");%>
 <div class="container ">
-    <div class="card mx-auto">
+    <div class="card mx-auto" style="width: 50rem;">
         <img src="http://localhost:8080/uploaded/files?id=<%=game.getFileId()%>" class="card-img-top">
         <div class="card-body">
             <h5 class="card-title"><%=game.getName()%></h5>

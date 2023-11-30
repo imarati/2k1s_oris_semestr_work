@@ -55,6 +55,8 @@ public class DataBaseServletContextListener implements ServletContextListener {
         servletContext.setAttribute("usersGamesRepository", usersGamesRepository);
         CartSevice cartSevice = new CartServiceImpl(cart, usersGamesRepository);
         servletContext.setAttribute("cartSevice", cartSevice);
+        UsersGamesService usersGamesService = new UsersGamesServiceImpl(usersGamesRepository, gameRepository);
+        servletContext.setAttribute("usersGamesService", usersGamesService);
     }
 
     @Override

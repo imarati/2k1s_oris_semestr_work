@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface UsersGamesRepository{
     void save(long userId, long gameId);
-    List<Game> findByUserId(long userId);
+    List<Integer> findByUserId(long userId);
     List<User> findByGameId(long gameId);
 }
