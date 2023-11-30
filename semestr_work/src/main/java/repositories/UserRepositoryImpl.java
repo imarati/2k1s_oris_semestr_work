@@ -18,6 +18,7 @@ public class UserRepositoryImpl implements UserRepository {
     String INSERT_INTO_USERS = "INSERT INTO users (name, surname, email, password) VALUES (?,?,?,?)";
     String INSERT_INTO_USERS_ROLES = "INSERT INTO users_roles VALUES (?,?)";
     String SELECT_FROM_USERS_WHERE_EMAIL = "SELECT * FROM users WHERE email=?";
+    String SELECT_FROM_USERS_WHERE_ID = "SELECT * FROM users WHERE id=?";
 
     public UserRepositoryImpl (DataSource dataSource) {
         this.dataSource = dataSource;
@@ -79,6 +80,29 @@ public class UserRepositoryImpl implements UserRepository {
             Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_USERS_WHERE_EMAIL);
             preparedStatement.setString(1, email);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+
+            return User.builder()
+                    .id(resultSet.getInt("id"))
+                    .name(resultSet.getString("name"))
+                    .surname(resultSet.getString("surname"))
+                    .email(resultSet.getString("email"))
+                    .password(resultSet.getString("password"))
+                    .build();
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public User findById(long id) {
+        try {
+            Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_USERS_WHERE_ID);
+            preparedStatement.setLong(1, id);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();

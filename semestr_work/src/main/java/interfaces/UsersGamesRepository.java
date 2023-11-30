@@ -8,5 +8,5 @@ import java.util.List;
 public interface UsersGamesRepository{
     void save(long userId, long gameId);
     List<Integer> findByUserId(long userId);
-    List<User> findByGameId(long gameId);
+    List<Integer> findByGameId(long gameId);
 }

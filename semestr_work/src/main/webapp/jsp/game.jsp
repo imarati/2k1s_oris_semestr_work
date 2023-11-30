@@ -20,6 +20,7 @@
             <form action="/game?id=<%=game.getId()%>" method="post">
                 <input class="btn btn-primary" type="submit" value="Add to cart">
             </form>
+            <a class="btn btn-primary" href="http://localhost:8080/players?id=<%=game.getId()%>">Players</a>
         </div>
     </div>
 </div>>

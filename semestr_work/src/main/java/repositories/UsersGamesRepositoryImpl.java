@@ -62,26 +62,20 @@ public class UsersGamesRepositoryImpl implements UsersGamesRepository {
     }
 
     @Override
-    public List<User> findByGameId(long gameId) {
-        List<User> result = new ArrayList<>();
+    public List<Integer> findByGameId(long gameId) {
+        List<Integer> result = new ArrayList<>();
 
         try {
             Connection connection = dataSource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_USERS_GAMES_WHERE_USER_ID);
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_USERS_GAMES_WHERE_GAME_ID);
 
             preparedStatement.setLong(1, gameId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                User user = User.builder()
-                        .id(resultSet.getLong("id"))
-                        .name(resultSet.getString("name"))
-                        .surname(resultSet.getString("surname"))
-                        .email(resultSet.getString("email"))
-                        .password(resultSet.getString("password"))
-                        .build();
+                int user_id = resultSet.getInt("user_id");
 
-                result.add(user);
+                result.add(user_id);
             }
 
             return result;

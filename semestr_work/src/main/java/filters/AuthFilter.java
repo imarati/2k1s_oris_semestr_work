@@ -35,6 +35,7 @@ public class AuthFilter implements Filter {
         Boolean isAddAdminPage = request.getRequestURI().equals("/addAdmin");
         Boolean isAddGamePage = request.getRequestURI().equals("/addGame");
         Boolean isFilesUploaded = request.getRequestURI().equals("/uploaded/files");
+        Boolean isPlayers = request.getRequestURI().equals("/players");
 
         if (sessionExists) {
             isAuthenticated = (Boolean) session.getAttribute("authenticated");
@@ -55,7 +56,7 @@ public class AuthFilter implements Filter {
                 || (isAuthenticated && isAdmin)) {
             filterChain.doFilter(request, response);
         }
-        else if (isAuthenticated && !isAdmin && (isAddAdminPage || isAddGamePage)) {
+        else if (isAuthenticated && !isAdmin && (isAddAdminPage || isAddGamePage || isPlayers)) {
             response.sendRedirect("/");
         }
         else {
