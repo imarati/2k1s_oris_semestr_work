@@ -28,7 +28,7 @@ public class CartServiceImpl implements CartSevice {
     }
 
     @Override
-    public boolean bye(long userId) {
+    public boolean buy(long userId) {
         List<Game> games = cart.getGamesList();
 
         for (Game game : games) {

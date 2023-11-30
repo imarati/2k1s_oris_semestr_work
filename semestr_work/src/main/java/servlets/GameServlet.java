@@ -40,5 +40,7 @@ public class GameServlet extends HttpServlet {
         String gameId = req.getParameter("id");
         Game game = gameService.getGame(Long.parseLong(gameId));
         cartSevice.addToCart(game);
+
+        resp.sendRedirect("/");
     }
 }

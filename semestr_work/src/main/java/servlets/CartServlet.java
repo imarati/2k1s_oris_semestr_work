@@ -37,6 +37,8 @@ public class CartServlet extends HttpServlet {
         HttpSession httpSession = req.getSession();
         User user = (User) httpSession.getAttribute("user");
 
-        cartSevice.bye(user.getId());
+        cartSevice.buy(user.getId());
+
+        resp.sendRedirect("/");
     }
 }

@@ -25,8 +25,6 @@ public class AuthFilter implements Filter {
 
         String role = (String) session.getAttribute("role");
 
-        System.out.println(request.getRequestURI());
-
         Boolean isAuthenticated = false;
         Boolean isAdmin = false;
         Boolean sessionExists = session != null;

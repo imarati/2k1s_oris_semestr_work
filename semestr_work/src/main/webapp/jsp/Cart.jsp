@@ -25,7 +25,7 @@
                 <%}%>
             </ul>
             <form action="/cart" method="post">
-                <input class="btn btn-primary" type="submit" value="Bye">
+                <input class="btn btn-primary" type="submit" value="Buy">
             </form>
         </div>
     </div>
